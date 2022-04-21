@@ -7,7 +7,7 @@ def read_allwords():
     new_all_words = []
     for line in all_words:
         new = line #[:-2]
-        if len(new) == 7:
+        if len(new) == 6:
             five_let.append(new)
         else: 
             continue
