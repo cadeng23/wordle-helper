@@ -2,11 +2,7 @@
 old = []
 words = []
 possible = []
-first = []
-second = []
-third = []
-fourth = []
-filters = [first, second, third, fourth]
+temp = []
 def read_words():
     file = open("./program/newWords.txt",'r')
     old = file.readlines()
@@ -45,25 +41,48 @@ def input_one(words):
     print(current)
     return outed, inned, current
 
-def filtered(words, outed, inned, current):
-    known = []
-    spotKnown = []
+def filtered(words, outed, inned, current, possible):
+    known = [] #the known letter(s) in the word
+    spotKnown = [] #The know indexes that correspond to the word in the same spot on the known list
     for x in current:
         if x != '_':
             if x.islower() == False:
                 low = x.lower()
             else:
                 low = x
-            i = current.index(low)
-            known.append(i)
-            spotKnown.append(low)
+            i = current.index(x)
+            known.append(x)
+            spotKnown.append(i)
     s = 0
-    while(True):
-        for word in words:
-            if word[]
+    for word in words:
+        if word[spotKnown[s]] == known[s]:
+            possible.append(word)
+    s += 1
+    if len(spotKnown) > 1:
+        temp = possible
+        possible = []
+        for word in temp:
+            if word[spotKnown[s]] == known[s]:
+                possible.append(word)
+    s += 1
+    if len(spotKnown) > 2:
+        temp = possible
+        possible = []
+        for word in temp:
+            if word[spotKnown[s]] == known[s]:
+                possible.append(word)
+    s += 1
+    if len(spotKnown) > 3:
+        temp = possible
+        possible = []
+        for word in temp:
+            if word[spotKnown[s]] == known[s]:
+                possible.append(word)
+    print(possible)
 
 def main():
     read_words()
-    input_one(words)
+    outed, inned, current = input_one(words)
+    filtered (words, outed, inned, current, possible)
 
 main()
