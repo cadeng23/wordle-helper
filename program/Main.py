@@ -1,7 +1,7 @@
 #Caden Gustafson
 old = []
 def read_words(words):
-    file = open("./program/newWords.txt",'r')
+    file = open("./program/PickedWords.txt",'r')
     old = file.readlines()
     for line in old:
         new = line[:-1]
@@ -51,68 +51,113 @@ def filtered(words, outed, inned, current):
             i = current.index(x)
             known.append(low)
             spotKnown.append(i)
+    print('letters known =', known)
+    print('spot known =', spotKnown)
     #End Step 1
     #Step 2: filter through all the words for the letters in the spots that are known
     temp = []
     possible = []
-    print(known)
     print(spotKnown)
-    for word in words:
-        spot = spotKnown[0]
-        if known[spot] == word[spotKnown[0]]:
-            possible.append(word)
-    print(possible)
-    for here in spotKnown:
-        temp = possible
-        possible = []
+    print(known)
+    print('size after step 1 =', len(words))
+    if len(spotKnown) > 0:
         for word in words:
-            spot = spotKnown.index(here)
-            if known[spot] == word[here] and word in temp:
+            spot = spotKnown[0]
+            if known[0] == word[spot]:
                 possible.append(word)
+                #print('known =',known[spot], 'at spot ', spot)
+                #print('spot =', word[spotKnown[0]], 'at spot ', spotKnown[0])
+        print('possible size =', len(possible))
+        for here in spotKnown:
+            temp = possible
+            possible = []
+            for word in words:
+                spot = spotKnown.index(here)
+                if known[spot] == word[here] and word in temp:
+                    possible.append(word)
+    if len(spotKnown) == 0:
+        for word in words:
+            possible.append(word)
     #End Step 2
     #Step 3: filter out based on the letters that are known not to be in the word
-    print('after step 2 =',possible)
-    temp = possible
-    possible = []
-    c = 0
-    for x in temp:
-        for a in outed:
-            if a not in x:
-                c += 1
-            else: 
-                break
-        if c == len(outed):
-            possible.append(x)
+    print('left after step 2 =', len(possible))
+    print('size of outed =', len(outed))
+    if len(outed) > 0:
+        temp = possible
+        possible = []
         c = 0
+        for x in temp:
+            for a in outed:
+                if a not in x:
+                    c += 1
+                else: 
+                    break
+            if c == len(outed):
+                possible.append(x)
+            c = 0
     #End Step 3
     #Step 4: check to see what letters are known but do not have a spot yet
-    temp = possible
-    print('after step 3 =',possible)
-    final = []
-    p = 0
-    print(len(inned))
+    print('size after step 3 =',len(possible))
+    print('inned size =', len(inned))
     if len(inned) > 0:
-        for x in temp:
-            for i in inned:
-                if i in x:
-                    p += 1
-                else:
-                    break
-            if p == len(inned):
-                final.append(x)
-            p = 0
-    if len(inned) == 0:
-        final = temp
+        temp = possible
+        possible = []
+        p = 0
+        print(len(inned))
+        if len(inned) > 0:
+            for x in temp:
+                for i in inned:
+                    if i in x:
+                        p += 1
+                    else:
+                        break
+                if p == len(inned):
+                    possible.append(x)
+                p = 0
+        if len(inned) == 0:
+            possible = temp
     #End Step 4
+    #Step 5: ask for the positions that the inned list cannot be in
+    pos = []
+    listing = []
+    a = 0
+    for i in inned:
+        b = input('how many spots can ', inned[a], ' not be in?: ')
+        b = int(b)
+        for here in range(b):
+            op = input('what is the spot that', inned[a], 'is not allowed to be in?')
+            listing.append(op)
+        pos.append(listing)
+        a += 1
+    temp = possible
+    possible = []
+    yn = []
+    let = 0
+    posh = 0
+    for word in temp:
+        for x in pos[posh]:
+            if word[x] == inned[let]:
+                yn.append('n')
+            else:
+                yn.append('y')
+        
+        
+
+            
+    #End Step 5
+    temp = possible
+    possible = []
+    for g in temp:
+        if g not in possible:
+            possible.append(g)
     t = 1
-    print(final)
-    for f in final:
+    for f in possible:
         print('answer', t, '=', f)
+        t += 1
 
 def main():
     words = []
     words = read_words(words)
-    #print(words)
     outed, inned, current = input_one(words)
     filtered (words, outed, inned, current)
 
