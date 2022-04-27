@@ -118,30 +118,26 @@ def filtered(words, outed, inned, current):
             possible = temp
     #End Step 4
     #Step 5: ask for the positions that the inned list cannot be in
-    pos = []
-    listing = []
-    a = 0
-    for i in inned:
-        b = input('how many spots can ', inned[a], ' not be in?: ')
-        b = int(b)
-        for here in range(b):
-            op = input('what is the spot that', inned[a], 'is not allowed to be in?')
-            listing.append(op)
-        pos.append(listing)
-        a += 1
-    temp = possible
-    possible = []
-    yn = []
-    let = 0
-    posh = 0
-    for word in temp:
-        for x in pos[posh]:
-            if word[x] == inned[let]:
-                yn.append('n')
-            else:
-                yn.append('y')
-        
-        
+    r = len(inned)
+    curr = 0
+    while(True):
+        arr = []
+        if curr < len(inned):
+            b = input('how many spots do you know that ', inned[curr], 'is not in the word?')
+            b = int(b)
+            for a in range(b):
+                spot = input('spot that ', inned[curr].upper(), ' is not in?')
+                spot = int(spot)
+                arr.append(spot)
+            for word in possible:
+                for z in spot:
+                    p = 0
+                    if inned[curr] != word[z]:
+
+
+
+                
+
 
             
     #End Step 5
